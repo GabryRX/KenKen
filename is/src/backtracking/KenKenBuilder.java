@@ -36,6 +36,11 @@ public class KenKenBuilder {
 		return this;
 	}
 	public KenKen build() {
+		int size=0;
+		for(Cage cg:kk.getCages()) {
+			size+=cg.size();
+		}
+		if(size!=kk.size()*kk.size()) throw new IllegalStateException("KenKen incompleto");
 		return kk;
 	}
 	@Override

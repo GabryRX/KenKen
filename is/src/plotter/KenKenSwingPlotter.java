@@ -412,7 +412,7 @@ public class KenKenSwingPlotter implements KenKenPlotter{
 	        }
 	    }
 	    private void checkComplete() {
-	    	if(kkus.verifica() && buffer.getCnt()==buffer.size()*buffer.size()) {
+	    	if(buffer.getCnt()==buffer.size()*buffer.size() && kkus.verifica()) {
 	    		grid.setNotEditable();
 	    		message.setText("Risolto!");}
     		//System.out.println("CNT:"+buffer.getCnt()+" Size:"+(buffer.size()*buffer.size())); 
