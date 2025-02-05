@@ -1,6 +1,9 @@
 package backtracking;
 
-class Index{
+import java.io.*;
+
+class Index implements Serializable{
+	private static final long serialVersionUID = 156594752832762016L;
 	private int i;
 	private int j;
 	public Index(int i,int j) {

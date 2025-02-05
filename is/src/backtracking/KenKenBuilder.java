@@ -7,11 +7,6 @@ public class KenKenBuilder {
 	public KenKenBuilder(int size) {
 		kk=new KenKenImp(size);
 	}
-	public KenKenBuilder cage(Set<Index> cage,Operation op,int result) {
-		Cage cg=kk.createCage(cage,op,result);
-		kk.setCage(cg);
-		return this;
-	}
 	public KenKenBuilder cage(int i1,int i2,Operation op,int j,int result) {
 		Cage cg=kk.createCage(i1,i2,op,j,result);
 		kk.setCage(cg);
@@ -42,5 +37,9 @@ public class KenKenBuilder {
 	}
 	public KenKen build() {
 		return kk;
+	}
+	@Override
+	public String toString() {
+		return kk.toString();
 	}
 }

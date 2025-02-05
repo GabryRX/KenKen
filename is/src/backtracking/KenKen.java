@@ -1,12 +1,14 @@
 package backtracking;
 
+import java.io.*;
 import java.util.*;
 
-public interface KenKen {
+public interface KenKen extends Serializable{
 	public int getCnt();
 	public Integer getValue(int i,int j);
 	public int size();
-	//public List<Cage> getCages();
+	public List<Cage> getCages();
+	public void reset();
 	public default void setValue(int i,int j,int v){
 		set(i,j,v);
 	}
@@ -22,6 +24,6 @@ public interface KenKen {
 	public boolean checkPos(int i,int j,int val);
 	public boolean checkCage(Cage cg,int curr);
 	public boolean checkCage(int i,int j,int curr);
-	public boolean checkAllCage();
+	public boolean checkCage(int i,int j);
 	public boolean occupato(int i,int j);
 }

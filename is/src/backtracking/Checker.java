@@ -6,17 +6,17 @@ public class  Checker {
 	private void Cheker() {}
 	public static boolean controllaPos(int i,int j,int val,int[][] kk) {
 		if(i>9 && j>9) throw new IndexOutOfBoundsException();
-		return controllaRiga(i,val,kk) && controllaColonna(j,val,kk);
+		return controllaRiga(i,val,kk,j) && controllaColonna(j,val,kk,i);
 	}
-	private static boolean controllaRiga(int i,int val,int[][] kk) {
+	private static boolean controllaRiga(int i,int val,int[][] kk,int noJ) {
 		for(int j=0;j<kk[i].length;j++)
-			if(kk[i][j]==val)
+			if(kk[i][j]==val && j!=noJ)
 				return false;
 		return true;
 	}
-	private static boolean controllaColonna(int j,int val,int[][] kk) {
+	private static boolean controllaColonna(int j,int val,int[][] kk,int noI) {
 		for(int i=0;i<kk.length;i++)
-			if(kk[i][j]==val)
+			if(kk[i][j]==val && i!=noI)
 				return false;
 		return true;
 	}
@@ -44,9 +44,28 @@ public class  Checker {
 		}
 		return true;
 	}
+	// Usato da BtSolver
 	public static Boolean cageOccupata(Cage cg,KenKen kk,int curr) {
 		List<Integer> res=new ArrayList<>();
+		
+		boolean zero=false;
+		for(Index c:cg.getCage()) {
+			int i=c.getI();
+			int j=c.getJ();
+			int val=kk.getValue(i, j);
+			if(val!=0) res.add(val);
+		}
 		res.add(curr);
+		if(res.size()==cg.size()+1) res.remove(curr); 
+		if(res.size()==0) return true;
+		if(res.size()!=cg.size()) zero=true;
+		//System.out.println("LIST:"+res.size()+res+" CAGE:"+cg.size());
+		return controllaCage(res,cg.getOp(),cg.getResult(),zero);
+	}
+	// Usato da UserSolver
+	public static Boolean cageOccupataNoCurr(Cage cg, KenKen kk) {
+		List<Integer> res=new ArrayList<>();
+		
 		boolean zero=false;
 		for(Index c:cg.getCage()) {
 			int i=c.getI();

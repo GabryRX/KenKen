@@ -1,9 +1,10 @@
 package test;
 
 import backtracking.*;
+import plotter.KenKenSwingPlotter;
 
-public class TestBtSolver {
-	public static void test1() {
+public class TestSwing {
+	public static KenKen test1() {
 		KenKenBuilder kkb=new KenKenBuilder(3);
 		
 		kkb=kkb.cage(0,1,Operation.SUM,0,3)
@@ -12,10 +13,9 @@ public class TestBtSolver {
 				.cage(0,1,Operation.SUB,1,1);
 		KenKenImp kk=(KenKenImp)kkb.build();
 		System.out.println(kk);
-		KenkenBtSolver sol=new KenkenBtSolver(kk);
-		sol.risolvi();
+		return kk;
 	}
-	public static void test2() {
+	public static KenKen test2() {
 		KenKenBuilder kkb=new KenKenBuilder(6);
 		
 		kkb=kkb.cage(0, 1, Operation.SUM, 0, 11)
@@ -38,10 +38,9 @@ public class TestBtSolver {
 				.cage(3, 4, 3, Operation.SUM, 4, 3, 4, 7);
 		KenKenImp kk=(KenKenImp)kkb.build();
 		System.out.println(kk);
-		KenkenBtSolver sol=new KenkenBtSolver(kk);
-		sol.risolvi();
+		return kk;
 	}
-	public static void test3() {
+	public static KenKen test3() {
 		KenKenBuilder kkb=new KenKenBuilder(4);
 		
 		kkb=kkb.cage(0, Operation.SUB, 0, 1, 3)
@@ -55,11 +54,12 @@ public class TestBtSolver {
 				.cage(2, 3, 0, Operation.SUM, 2, 0, 1, 5);
 		KenKenImp kk=(KenKenImp)kkb.build();
 		System.out.println(kk);
-		KenkenBtSolver sol=new KenkenBtSolver(kk);
-		sol.risolvi();
+		return kk;
 	}
 	public static void main(String[] args) {
-		System.out.println("Start");
-		test3();
+		
+		KenKenSwingPlotter kks=new KenKenSwingPlotter(test3());
+		kks.plot();
+		
 	}
 }

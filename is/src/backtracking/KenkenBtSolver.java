@@ -5,11 +5,14 @@ import java.util.*;
 
 public class KenkenBtSolver extends Backtracking<Index,Integer> implements Solver {
 	private KenKen kt;
+	private List<KenKen> sols;
 	private static boolean trovato=false;
 	public KenkenBtSolver(KenKenImp kt) {
+		sols=new ArrayList<>();
 		this.kt=kt;
 	}
 	public KenkenBtSolver(KenKen kt) {
+		sols=new ArrayList<>();
 		this.kt=(KenKenImp)kt;
 	}
 	
@@ -44,6 +47,8 @@ public class KenkenBtSolver extends Backtracking<Index,Integer> implements Solve
 	protected void scriviSoluzione() {
 		System.out.println("Soluzione:");
 		System.out.println(toString());
+		sols.add(new KenKenImp((KenKenImp)kt));
+		
 	}
 	@Override
 	protected boolean esisteSoluzione() {
@@ -94,6 +99,7 @@ public class KenkenBtSolver extends Backtracking<Index,Integer> implements Solve
 		return ret;
 	}
 	public final void risolvi() {//Utilizzabile anche fuori dal package
+		this.sols.clear();
 		int i=0;
 		int j=0;
 		Index in=new Index(0,0);
@@ -107,5 +113,8 @@ public class KenkenBtSolver extends Backtracking<Index,Integer> implements Solve
 			in=new Index(i,j);
 			}
 		this.risolvi(in);
+	}
+	public List<KenKen> getSolution() {
+		return sols;
 	}
 }

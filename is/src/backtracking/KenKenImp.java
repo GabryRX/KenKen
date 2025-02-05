@@ -3,6 +3,7 @@ package backtracking;
 import java.util.*;
 
 public class KenKenImp implements KenKen{
+	private static final long serialVersionUID = 7181941726820495894L;
 	private int[][] kk;
 	private int cnt;
 	private List<Index> occupati;
@@ -18,6 +19,23 @@ public class KenKenImp implements KenKen{
 		this.occupati=new ArrayList<>();
 		this.cages=new ArrayList<>();
 		this.size=size;
+	}
+	public KenKenImp(KenKenImp kt) {
+		this.kk=new int[kt.size][kt.size];
+		for(int i=0;i<kk.length;i++)
+			for(int j=0;j<kk[0].length;j++)
+				this.kk[i][j]=kt.kk[i][j];
+		this.cnt=kt.cnt;
+		this.occupati=new ArrayList<>(kt.occupati);
+		this.cages=new ArrayList<>(kt.cages);
+		this.size=kt.size;
+	}
+	public void reset() {
+		this.kk=new int[kk.length][kk.length];
+		for(int i=0;i<kk.length;i++)
+			for(int j=0;j<kk[0].length;j++)
+				kk[i][j]=0;
+		this.cnt=occupati.size();
 	}
 	//Getter
 	public int getCnt() {
@@ -88,8 +106,8 @@ public class KenKenImp implements KenKen{
 	
 	//Utility
 	
-	public List<CageImp> getCages() {
-		return cages;
+	public List<Cage> getCages() {
+		return new ArrayList<Cage>(cages);
 	}
 	
 	public boolean checkPos(int i, int j, int val) {
@@ -102,16 +120,16 @@ public class KenKenImp implements KenKen{
 		Cage cg=Checker.trovaCage(i, j,new ArrayList<>(this.getCages()));
 		return Checker.cageOccupata(cg, this,curr);
 	}
-	@Override
-	public boolean checkAllCage() {
-		List<Cage> cageInt=new ArrayList<Cage>(cages);
-		return Checker.controllaTuttiCage(cageInt, this);
+	public boolean checkCage(int i, int j) {
+		Cage cg=Checker.trovaCage(i, j,new ArrayList<>(this.getCages()));
+		return Checker.cageOccupataNoCurr(cg, this);
 	}
 	public boolean occupato(int i,int j) {
 		return occupati.contains(new Index(i,j));
 	}
 	
 	public class CageImp implements Cage {
+		private static final long serialVersionUID = 7897114504523854504L;
 		private Set<Index> cage;
 		private Operation op;
 		private int result;
@@ -123,7 +141,8 @@ public class KenKenImp implements KenKen{
 			this.op=op;
 			this.result=result;
 		}
-		//Vertical
+		/**Vertical
+		 */
 		public CageImp(int i1, int i2, Operation op,int j, int result) {
 			this.cage=new HashSet<>();
 			for(int i=i1;i<=i2;i++) {
@@ -132,7 +151,8 @@ public class KenKenImp implements KenKen{
 			this.op=op;
 			this.result=result;
 		}
-		//Horizontal
+		/** Horizontal
+		 */
 		public CageImp(int i, Operation op, int j1, int j2, int result) {
 			this.cage=new HashSet<>();
 			for(int j=j1;j<=j2;j++) {
@@ -141,7 +161,8 @@ public class KenKenImp implements KenKen{
 			this.op=op;
 			this.result=result;
 		}
-		//L-Form
+		/**L-Form
+		 */
 		public CageImp(int i1,int i2,int j,Operation op,int i,int j1, int j2,int result) {
 			this.cage=new HashSet<>();
 			for(int k=i1;k<=i2;k++) {
@@ -153,7 +174,8 @@ public class KenKenImp implements KenKen{
 			this.op=op;
 			this.result=result;
 		}
-		//Cube
+		/**Cube
+		 */
 		public CageImp(int i1,int i2, Operation op, int j1, int j2, int result) {
 			this.cage=new HashSet<>();
 			for(int i=i1;i<=i2;i++) {
@@ -214,24 +236,27 @@ public class KenKenImp implements KenKen{
 		return new CageImp(cage,op,result);
 	}
 	@Override
+	/**Vertical
+	 */
 	public Cage createCage(int i1, int i2, Operation op,int j,int result) {
 		return new CageImp(i1,i2,op,j,result);
 	}
+	/** Horizontal
+	 */
 	@Override
 	public Cage createCage(int i, Operation op,  int j1, int j2, int result) {
 		return new CageImp(i,op,j1,j2,result);
 	}
+	/**Cube
+	 */
 	@Override
 	public Cage createCage(int i1, int i2, Operation op,int j1, int j2,int result) {
 		return new CageImp(i1,i2,op,j1,j2,result);
 	}
+	/**L-Form
+	 */
 	@Override
 	public Cage createCage(int i1, int i2, int j, Operation op, int i, int j1, int j2, int result) {
 		return new CageImp(i1,i2,j,op,i,j1,j2,result);
 	}
-	
-	
-
-
-	
 }
